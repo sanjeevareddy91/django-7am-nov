@@ -1,0 +1,27 @@
+Django : Its a web framework...
+
+# Flask
+# Fastapi -- 
+# Pyramid
+# Cherrypy..
+
+# Django -- Holovaty and Simon..
+    # Django 
+
+Python has to be installed..
+    Creation of Virtual Environment..
+        pip install virtualenv -- installing virtualenv..
+        virtualenv environment-name -- creation of virtualenv command..
+
+        to activate the environment - goto environment-name/scripts and use "activate"
+        to deactivate -- "deactivate"..
+
+
+
+# Django Features : 
+    # DRY -- 
+    # Default Admin Interface..
+    # Default server..
+    # Authentication and Session Management..
+    # Supports all the databases..
+

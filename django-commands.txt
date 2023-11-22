@@ -1,0 +1,62 @@
+# Project 
+    # Combination of Apps()
+# Application. --- A specific Functionality..
+
+
+1) Creating the Project...
+    django-admin startproject project-name 
+    django-admin startproject iplproject
+
+
+# Project Structure:
+
+iplproject 
+    -> iplproject
+        -> __init__.py -- Its for converting the folders into the python packages..
+        -> asgi.py -- Asyncoronous Server Gateway Interface -- 
+        -> settings.py --- All the project related settings has to be registered under this file..
+        -> urls.py --> All the main routes of the project...
+        -> wsgi.py -- > Web server Gateway Interface..
+    -> Manage.py -- Main important file where the execution of django starts.
+
+
+# 2) Running the created Project..
+    python manage.py runserver
+
+    # When we try to run any manage.py command we have to be in the same folder where manage.py file is there..
+
+# To Stop the running server us CTRL+C 
+
+
+# Running the server of django at specific port number...
+    python manage.py runserver portnumber
+    # portnumber should be a 4 digit number.
+
+# Creating the application....
+
+    python manage.py startapp appname
+
+    python manage.py startapp iplapp
+
+iplproject 
+    -> iplproject
+        -> __init__.py -- Its for converting the folders into the python packages..
+        -> asgi.py -- Asyncoronous Server Gateway Interface -- 
+        -> settings.py --- All the project related settings has to be registered under this file..
+        -> urls.py --> All the main routes of the project...
+        -> wsgi.py -- > Web server Gateway Interface..
+    -> Manage.py -- Main important file where the execution of django starts.
+    -> iplapp
+        -> migrations -- tracking of all the field changes we made on models..
+        -> admin.py  -- For customizing the admin Interface..
+        -> apps.py -- Its just for registering the appname..
+        -> models.py -- All the tabluar structures..
+        -> tests.py -- This is for writing the testcases.
+        -> views.py -- all the user logic..
+        -> urls.py -- Application level urls..
+
+Django Follows the MVT Architecture..
+    Model View Template..
+
+# Creation of superuser..
+    python manage.py createsuperuser
