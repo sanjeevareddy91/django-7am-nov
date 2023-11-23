@@ -60,3 +60,23 @@ Django Follows the MVT Architecture..
 
 # Creation of superuser..
     python manage.py createsuperuser
+
+
+# Makemigrations
+    python manage.py makemigrations
+
+See the SQL Query of particular migrations 
+
+    python manage.py sqlmigrate app-name file-id
+    python manage.py sqlmigrate iplapp 0001
+
+# Migrate --- Commiting the chnages in the migrations to the Database..
+
+    python manage.py migrate 
+
+
+ORMS -- Object Relational Mappers....
+
+    # create 
+
+        Model-name.objects.create(filednames=values)
