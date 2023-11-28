@@ -79,4 +79,5 @@ ORMS -- Object Relational Mappers....
 
     # create 
 
-        Model-name.objects.create(filednames=values)
+        Model-name.objects.create(filed1=value1,field2=value.....)
+        Franchises.objects.create(f_name=name,)
