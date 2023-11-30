@@ -1,0 +1,5 @@
+<!-- {{data}} -->
+
+{% for row in data %}
+    <a href="{% url 'update_franchesis' row.id %}">{{row}}</a><br>
+{% endfor %}

@@ -81,3 +81,11 @@ ORMS -- Object Relational Mappers....
 
         Model-name.objects.create(filed1=value1,field2=value.....)
         Franchises.objects.create(f_name=name,)
+
+    # all the data from the model..
+        Model-name.objects.all()
+        Franchises.objects.all()
+
+    # fetching the particular person record..
+        Model-name.objects.get(field_name=value)
+        Franchises.objects.get(id=1)
