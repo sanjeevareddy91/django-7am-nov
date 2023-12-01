@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import FranchisesModelForm
+from .forms import FranchisesModelForm,FranchisesForm
 # Create your views here.
 
 from django.http import HttpResponse
@@ -82,5 +82,21 @@ def delete_franchesis(request,id):
     # NormalForm.
 
 def register_modelform(request):
-    model_form = FranchisesModelForm(request.POST)
-    return render(request,'iplapp/model_form.html',{'form':model_form})
+    form = FranchisesModelForm()
+    if request.method == "POST":
+        form = FranchisesModelForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Franchesis Registered!")
+    return render(request,'iplapp/model_form.html',{'form':form})
+
+def register_form(request):
+    form = FranchisesForm()
+    if request.method == "POST":
+        form = FranchisesForm(request.POST,request.FILES)
+        if form.is_valid():
+            # form.save()
+            new_record = form.cleaned_data
+            Franchises.objects.create(**new_record)
+            return HttpResponse("Franchesis Registered!")
+    return render(request,'iplapp/normal_form.html',{'form':form})
