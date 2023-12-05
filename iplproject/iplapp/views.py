@@ -4,6 +4,8 @@ from .forms import FranchisesModelForm,FranchisesForm
 
 from django.http import HttpResponse
 from .models import Franchises
+from django.contrib import messages
+
 
 def welcome_message(request):
     return HttpResponse("<h1>Hello, Welcome to Django!</h1>")
@@ -87,7 +89,8 @@ def register_modelform(request):
         form = FranchisesModelForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponse("Franchesis Registered!")
+            messages.success(request,'Franchesis Registered Successfully!')
+            return redirect('list_franchesis')
     return render(request,'iplapp/model_form.html',{'form':form})
 
 def register_form(request):
