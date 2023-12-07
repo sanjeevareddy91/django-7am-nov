@@ -3,8 +3,10 @@ from .forms import FranchisesModelForm,FranchisesForm
 # Create your views here.
 
 from django.http import HttpResponse
-from .models import Franchises
+from .models import Franchises,UserInfo
 from django.contrib import messages
+
+from django.contrib.auth.models import User
 
 
 def welcome_message(request):
@@ -103,3 +105,28 @@ def register_form(request):
             Franchises.objects.create(**new_record)
             return HttpResponse("Franchesis Registered!")
     return render(request,'iplapp/normal_form.html',{'form':form})
+
+def RegisterUser(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        # import pdb;pdb.set_trace()
+        username = email.split('@')[0]
+        password = request.POST['password']
+        mobile = request.POST['mobile']
+        address = request.POST['address']
+        confirm_pass = request.POST['confirm_pass']
+        if password != confirm_pass:
+            messages.warning(request,"Password and Confirm Password Mismatched!")
+            return redirect('register_user')
+        user = User.objects.create(username=username,email=email)
+        user.set_password(password) # This is used for converting the raw text to encrypted password.
+        # user.is_staff = True
+        # user.is_superuser = True
+        user.save()
+        UserInfo.objects.create(user_data=user,mobile=mobile,address=address)
+        messages.success(request,'User Registered!')
+    return render(request,'iplapp/register_user.html')
+
+
+def login_user(request):
+    return render(request,'iplapp/login.html')

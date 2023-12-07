@@ -1,19 +1,9 @@
 {% extends 'iplapp/main.html' %}
 
 {% block content %}
-{% for message in messages %}
-  <div class="alert {{ message.tags }}" role="alert" id="msg">
-    {{ message }}
-  </div>
-{% endfor %}
 
 {% for row in data %}
     <a href="{% url 'update_franchesis' row.id %}">{{row}}</a><br>
 {% endfor %}
-<script>
-    var message_ele = document.getElementById("msg");
-    setTimeout(function() {
-    message_ele.style.display = "none";
-    }, 2000);
-</script>
+
 {% endblock %}

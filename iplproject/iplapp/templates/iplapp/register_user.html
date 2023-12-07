@@ -1,0 +1,30 @@
+{% extends 'iplapp/main.html' %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="container">
+      <h1>Register User</h1>
+      <hr>
+  
+      <label for="email"><b>Email</b></label>
+      <input type="email" placeholder="Enter Email" name="email" id="email" required><br>
+  
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" id="password" required><br>
+  
+      <label for="confirm_pass"><b>Confirm Password</b></label>
+      <input type="password" placeholder="Confirm Password" name="confirm_pass" id="confirm_pass" required><br>
+
+      <label for="mobile"><b>Mobile</b></label>
+      <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile"><br>
+  
+      <label for="address"><b>Address</b></label>
+      <input type="text" placeholder="Enter Address" name="address" id="address" required><br>
+      <hr>
+  
+      <button type="submit" class="registerbtn">Register</button>
+    </div>
+
+  </form>
+{% endblock %}

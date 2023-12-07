@@ -6,9 +6,21 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
+  {% for message in messages %}
+  <div class="alert {{ message.tags }}" role="alert" id="msg">
+    {{ message }}
+  </div>
+  {% endfor %}
+
   <div class="container">
     {% block content %}
     {% endblock %}
   </div>
 </body>
+<script>
+  var message_ele = document.getElementById("msg");
+  setTimeout(function() {
+  message_ele.style.display = "none";
+  }, 2000);
+</script>
 </html>
