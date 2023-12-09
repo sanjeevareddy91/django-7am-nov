@@ -1,26 +1,30 @@
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="container">
-      <h1>Register Franchsis</h1>
-      <hr>
-  
-      <label for="f_name"><b>Franchesis Name</b></label>
-      <input type="text" placeholder="Enter Franchesis Name" name="f_name" id="f_name" required><br>
-  
-      <label for="f_nickname"><b>Franchesis Nick Name</b></label>
-      <input type="text" placeholder="Enter Nick Name" name="f_nickname" id="f_nickname" required><br>
-  
-      <label for="started_year"><b>Started Year</b></label>
-      <input type="number" placeholder="Started Year" name="f_started_year" id="f_started_year" required><br>
+{% extends 'iplapp/main.html'%}
 
-      <label for="f_logo"><b>Logo</b></label>
-      <input type="file" name="f_logo"><br>
-  
-      <label for="no_of_trophies"><b>No of Trophies</b></label>
-      <input type="number" placeholder="No of Trophies" name="no_of_trophies" id="no_of_trophies" required><br>
-      <hr>
-  
-      <button type="submit" class="registerbtn">Register</button>
-    </div>
+{% block content %}
+  <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="container">
+        <h1>Register Franchsis</h1>
+        <hr>
+    
+        <label for="f_name"><b>Franchesis Name</b></label>
+        <input type="text" placeholder="Enter Franchesis Name" name="f_name" id="f_name" required><br>
+    
+        <label for="f_nickname"><b>Franchesis Nick Name</b></label>
+        <input type="text" placeholder="Enter Nick Name" name="f_nickname" id="f_nickname" required><br>
+    
+        <label for="started_year"><b>Started Year</b></label>
+        <input type="number" placeholder="Started Year" name="f_started_year" id="f_started_year" required><br>
+
+        <label for="f_logo"><b>Logo</b></label>
+        <input type="file" name="f_logo"><br>
+    
+        <label for="no_of_trophies"><b>No of Trophies</b></label>
+        <input type="number" placeholder="No of Trophies" name="no_of_trophies" id="no_of_trophies" required><br>
+        <hr>
+    
+        <button type="submit" class="registerbtn">Register</button>
+      </div>
 
   </form>
+{% endblock %}

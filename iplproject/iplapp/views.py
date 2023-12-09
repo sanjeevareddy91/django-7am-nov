@@ -7,6 +7,7 @@ from .models import Franchises,UserInfo
 from django.contrib import messages
 
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
 
 
 def welcome_message(request):
@@ -129,4 +130,36 @@ def RegisterUser(request):
 
 
 def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        print(username,password)
+        # 1st Way - Internal way
+        # user_data = authenticate(username=username,password=password) # This is just for checking the credentials thats it..
+        # print(user_data)
+        # if user_data:
+        #     login(request,user_data)
+        #     messages.success(request,f"{user_data} logged in")
+        #     return redirect('list_franchesis')
+        # else:
+        #     messages.warning(request,'Invalid credentials')
+
+        # 2nd Way - Custom Way
+        user_data = User.objects.filter(username=username)
+        print(user_data)
+        if user_data:
+            if user_data[0].check_password(password):
+                login(request,user_data[0])
+                messages.warning(request,f"{user_data[0]} logged in")
+                return redirect('list_franchesis')
+            else:
+                messages.warning(request,"username and password doensot match!")
+        else:
+            messages.warning(request,'Username not exist')
     return render(request,'iplapp/login.html')
+
+def logout_user(request):
+    user_data = request.user
+    logout(request)
+    messages.success(request,f'{user_data} logged out !')
+    return redirect('login_user')

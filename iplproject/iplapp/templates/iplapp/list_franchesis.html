@@ -1,9 +1,13 @@
 {% extends 'iplapp/main.html' %}
 
+
+
 {% block content %}
-
-{% for row in data %}
-    <a href="{% url 'update_franchesis' row.id %}">{{row}}</a><br>
-{% endfor %}
-
+    {% if request.user.is_authenticated %}
+        {% for row in data %}
+            <a href="{% url 'update_franchesis' row.id %}">{{row}}</a><br>
+        {% endfor %}
+    {% else %}
+        <p>Please <a href="{% url 'login_user' %}">Login</a></p>
+    {% endif %}
 {% endblock %}
