@@ -8,6 +8,8 @@ from django.contrib import messages
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from django.core.mail import send_mail
+import random
 
 
 def welcome_message(request):
@@ -125,6 +127,10 @@ def RegisterUser(request):
         # user.is_superuser = True
         user.save()
         UserInfo.objects.create(user_data=user,mobile=mobile,address=address)
+        message = f"HI {username},Your email id {email},has been successfully registered with us."
+        data = send_mail("Registration Confirmation",message,'gsanjeevreddy91@gmail.com',[email],fail_silently=False)
+        # import pdb;pdb.set_trace()
+        print(data)
         messages.success(request,'User Registered!')
     return render(request,'iplapp/register_user.html')
 
@@ -163,3 +169,16 @@ def logout_user(request):
     logout(request)
     messages.success(request,f'{user_data} logged out !')
     return redirect('login_user')
+
+def forgot_email(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        user_data = User.objects.filter(email=email)
+        if user_data:
+            otp = random.randint(100000,999999)
+            message = f"Use this OTP {otp} for changing the password."
+            send_mail("Forgot OTP",message,"gsanjeevreddy91@gmail.com",[email],fail_silently=False)
+            messages.success(request,"OTP has been sent to email id successfully")
+        else:
+            messages.warning(request,"Invalid email , please check whether account exist.")
+    return render(request,'iplapp/forgot_email.html')

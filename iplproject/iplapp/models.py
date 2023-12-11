@@ -19,6 +19,7 @@ class UserInfo(models.Model):
     user_data = models.ForeignKey(User,on_delete=models.CASCADE)
     mobile = models.CharField(max_length=10)
     address = models.CharField(max_length=100)
+    otp = models.IntegerField(null=True,blank=True)
 
     def __str__(self):
         return self.mobile
