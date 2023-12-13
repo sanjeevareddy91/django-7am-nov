@@ -1,0 +1,18 @@
+{% extends 'iplapp/main.html' %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="container">
+      <h1>Verify OTP</h1>
+      <hr>
+  
+      <label for="otp"><b>OTP</b></label>
+      <input type="text" placeholder="Enter OTP" name="otp" id="otp" required><br>
+  
+    <hr>
+  
+      <button type="submit" class="registerbtn">Verify OTP</button>
+
+  </form>
+{% endblock %}

@@ -15,5 +15,7 @@ urlpatterns = [
     path('',RegisterUser,name='register_user'),
     path('login/',login_user,name="login_user"),
     path('logout/',logout_user,name="logout_user"),
-    path('forgot_email/',forgot_email,name='forgot_email')
+    path('forgot_email/',forgot_email,name='forgot_email'),
+    path('verify_otp/<id>',verify_otp,name='verify_otp'),
+    path('password_change/<id>',password_change,name="password_change")
 ]

@@ -176,9 +176,45 @@ def forgot_email(request):
         user_data = User.objects.filter(email=email)
         if user_data:
             otp = random.randint(100000,999999)
+            user_info = user_data[0]
+            user_info_data = UserInfo.objects.get(user_data=user_info)
+            user_info_data.otp = otp
+            user_info_data.save()
             message = f"Use this OTP {otp} for changing the password."
             send_mail("Forgot OTP",message,"gsanjeevreddy91@gmail.com",[email],fail_silently=False)
             messages.success(request,"OTP has been sent to email id successfully")
+            return redirect('verify_otp',user_info_data.id)
         else:
             messages.warning(request,"Invalid email , please check whether account exist.")
     return render(request,'iplapp/forgot_email.html')
+
+def verify_otp(request,id):
+    if request.method == "POST":
+        otp = request.POST['otp']
+        user_info = UserInfo.objects.get(id=id)
+        print(user_info.otp == int(otp))
+        print(type(otp))
+        print(type(user_info.otp))
+        if user_info.otp == int(otp):
+            messages.success(request,'OTP verification successful')
+            return redirect('password_change',id)
+        else:
+            messages.warning(request,"OTP mismatched, Please check the OTP and try again.")
+
+    return render(request,'iplapp/verify_otp.html')
+
+def password_change(request,id):
+    if request.method == "POST":
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        if password == confirm_password:
+            user_info = UserInfo.objects.get(id=id)
+            user_id = user_info.user_data.id
+            user_data = User.objects.get(id=user_id)
+            user_data.set_password(password)
+            user_data.save()
+            messages.success(request,"Password Updated Successfully, please login")
+            return redirect('login_user')
+        else:
+            messages.warning(request,"Password and Confirm Password Mismatched")
+    return render(request,'iplapp/password_change.html')
