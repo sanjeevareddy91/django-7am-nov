@@ -1,20 +1,39 @@
-import scheduler
-import numpy as np
-import pandas as pd
+from pprint import pprint as pp
 
-nteams = 10
-nfields = 3
-bestfields = 1
+def make_day(num_teams, day,teams_list):
+    # using circle algorithm, https://en.wikipedia.org/wiki/Round-robin_tournament#Scheduling_algorithm
+    assert not num_teams % 2, "Number of teams must be even!"
+    # generate list of teams
+    lst = teams_list
+    # rotate
+    day %= (num_teams - 1)  # clip to 0 .. num_teams - 2
+    if day:                 # if day == 0, no rotation is needed (and using -0 as list index will cause problems)
+        lst = lst[:1] + lst[-day:] + lst[1:-day]
+    # pair off - zip the first half against the second half reversed
+    half = num_teams // 2
+    return list(zip(lst[:half], lst[half:][::-1]))
 
-teams = ['Team ' + str(z+1) for z in range(nteams)]
-games = scheduler.get_best_schedule(teams,nfields,bestfields)
+def make_schedule(teams_list):
+    """
+    Produce a double round-robin schedule
+    """
+    # number of teams must be even
+    num_teams = len(teams_list)
+    if num_teams % 2:
+        num_teams += 1  # add a dummy team for padding
 
-# Field distribution quality
-scheduler.get_aggregate_data(games)
+    # build first round-robin
+    schedule = [make_day(num_teams, day,teams_list) for day in range(num_teams - 1)]
+    # generate second round-robin by swapping home,away teams
+    swapped = [[(away, home) for home, away in day] for day in schedule]
 
-# Schedule quality
-np.array(scheduler.get_gap_info(games))   # gaps between games (rows are teams)
+    return schedule + swapped
 
-# Save the schedule to csv
-schedule = scheduler.pivot_schedule(games)
-schedule.to_csv('schedule.csv')
+def main(list_of_teams):
+    teams_list = list_of_teams
+    schedule = make_schedule(teams_list)
+    # pp(schedule)
+    return schedule
+
+# if __name__ == "__main__":
+#     main()

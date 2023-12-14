@@ -23,3 +23,11 @@ class UserInfo(models.Model):
 
     def __str__(self):
         return self.mobile
+    
+class Schedule(models.Model):
+    team1 = models.CharField(max_length=4)
+    team2 = models.CharField(max_length=4)
+    winner = models.CharField(max_length=4,null=True,blank=True)
+
+    def __str__(self):
+        return str(self.team1)+ 'Vs' +str(self.team2)

@@ -3,13 +3,14 @@ from .forms import FranchisesModelForm,FranchisesForm
 # Create your views here.
 
 from django.http import HttpResponse
-from .models import Franchises,UserInfo
+from .models import Franchises,UserInfo,Schedule
 from django.contrib import messages
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.core.mail import send_mail
 import random
+from .fixture_generator import main
 
 
 def welcome_message(request):
@@ -218,3 +219,16 @@ def password_change(request,id):
         else:
             messages.warning(request,"Password and Confirm Password Mismatched")
     return render(request,'iplapp/password_change.html')
+
+def schedule(request):
+    data = [row.f_nickname for row in Franchises.objects.all()]
+    # import pdb;pdb.set_trace()
+    schedule = main(data)
+    final_schedule = []
+    for ele in schedule:
+        for ele1 in ele:
+            final_schedule.append(ele1)
+    for match in final_schedule:
+        Schedule.objects.create(team1=match[0],team2=match[1])
+    messages.success(request,'Schedule created')
+    return render(request,'iplapp/schedule.html',{'matches':final_schedule})

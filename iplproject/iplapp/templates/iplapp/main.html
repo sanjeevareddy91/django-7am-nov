@@ -21,7 +21,7 @@
             <a class="nav-link" href="{% url 'register_user' %}">Register User <span class="sr-only">(current)</span></a>
           {% endif %}
         </li>
-
+      <li><a class="nav-link" href="{% url 'schedule' %}">Create Schedule</a></li>
       </ul>
         <li class="nav-item active">
           {% if request.user.is_authenticated %}
