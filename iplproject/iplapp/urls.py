@@ -18,5 +18,9 @@ urlpatterns = [
     path('forgot_email/',forgot_email,name='forgot_email'),
     path('verify_otp/<id>',verify_otp,name='verify_otp'),
     path('password_change/<id>',password_change,name="password_change"),
-    path('schedule/',schedule,name="schedule")
+    path('schedule/',schedule,name="schedule"),
+    path('cls_message/',MessageView.as_view(),name="cls_message"),
+    path('cls_register/',SampleFromView.as_view(),name='cls_register'),
+    path('cls_registerfranchesis/',RegisterFranchesisView.as_view(),name='cls_registerfranchesis'),
+    path('cls_list_franchesis/',ListFranchesisView.as_view(),name='cls_list_franchesis'),
 ]

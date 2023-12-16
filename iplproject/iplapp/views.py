@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.core.mail import send_mail
 import random
 from .fixture_generator import main
+from django.views import View
+from django.views.generic import ListView
 
 
 def welcome_message(request):
@@ -232,3 +234,42 @@ def schedule(request):
         Schedule.objects.create(team1=match[0],team2=match[1])
     messages.success(request,'Schedule created')
     return render(request,'iplapp/schedule.html',{'matches':final_schedule})
+
+# Class Based Views : Writing the views by using the concepts of OOPs.
+    # Views
+    # Generic Views
+
+class MessageView(View):
+    def get(self,request):
+        return HttpResponse("<h1>Hello, Welcome to Django!</h1>")
+
+class SampleFromView(View):
+    def get(self,request):
+        return render(request,'iplapp/register.html')
+
+    def post(self,request):
+        print(request.POST)
+        email = request.POST['email']
+        return HttpResponse(f"{email}")
+    
+class RegisterFranchesisView(View):
+    def get(self,request):
+        return render(request,'iplapp/register_franchesis.html')
+    
+    def post(self,request):
+        data = request.POST
+        print(request.FILES)
+        new_record = {record:data[record] for record in data if record != 'csrfmiddlewaretoken'}
+        new_record['f_logo'] = request.FILES['f_logo']
+        franchesis_data = Franchises(**new_record)
+
+        franchesis_data.save()
+        messages.success(request,"Class based Register Franchesis Success")
+        return redirect('list_franchesis')
+
+
+class ListFranchesisView(ListView):
+    def get(self,request):
+        data = Franchises.objects.all()
+        return render(request,'iplapp/list_franchesis.html',{"data":data})
+    
