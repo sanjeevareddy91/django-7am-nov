@@ -1,0 +1,29 @@
+{% extends 'iplapp/main.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+              {{ form.f_name|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+                {{ form.f_nickname|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+              {{ form.f_started_year|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+                {{ form.no_of_trophies|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-group col-md-6 mb-0">
+            {{ form.f_logo|as_crispy_field }}
+        </div>
+        <input type="submit" class="btn btn-primary">
+    </form>
+{% endblock %}

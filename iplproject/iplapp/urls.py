@@ -23,4 +23,7 @@ urlpatterns = [
     path('cls_register/',SampleFromView.as_view(),name='cls_register'),
     path('cls_registerfranchesis/',RegisterFranchesisView.as_view(),name='cls_registerfranchesis'),
     path('cls_list_franchesis/',ListFranchesisView.as_view(),name='cls_list_franchesis'),
+    path('cls_generic_create/',FranchesisGenericCreateView.as_view(),name='cls_generic_create'),
+    path('cls_generic_detail/<pk>',FranchesisGenericDetailView.as_view(),name='cls_generic_detail'),
+    path('cls_generic_update/<pk>',FranchesisGenericUpdateView.as_view(),name='cls_generic_update'),
 ]

@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.urls import reverse_lazy
 from .forms import FranchisesModelForm,FranchisesForm
 # Create your views here.
 
@@ -13,7 +14,10 @@ import random
 from .fixture_generator import main
 from django.views import View
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
+
+from django.views.generic.edit import CreateView,UpdateView
 
 def welcome_message(request):
     return HttpResponse("<h1>Hello, Welcome to Django!</h1>")
@@ -273,3 +277,25 @@ class ListFranchesisView(ListView):
         data = Franchises.objects.all()
         return render(request,'iplapp/list_franchesis.html',{"data":data})
     
+class FranchesisGenericCreateView(CreateView):
+    model = Franchises
+    fields = "__all__"
+    success_url = reverse_lazy('list_franchesis')
+
+class FranchesisGenericDetailView(DetailView):
+    model = Franchises
+
+class FranchesisGenericUpdateView(UpdateView):
+    model = Franchises
+    fields = "__all__"
+    success_url = reverse_lazy('list_franchesis')
+
+
+# Django Rest Framework APIs
+
+# RestAPIs are divided into 2 types:
+    # Function Based Apis
+    # Class Based Apis
+        # APIView
+        # GenericApis
+        # Viewsets

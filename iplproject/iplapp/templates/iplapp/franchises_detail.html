@@ -1,0 +1,31 @@
+{% extends 'iplapp/main.html' %}
+
+{% block content %}
+  <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="container">
+        <h1>Update Franchesis</h1>
+        <hr>
+    
+        <label for="f_name"><b>Franchesis Name</b></label>
+        <input type="text" placeholder="Enter Franchesis Name" name="f_name" id="f_name" value="{{object.f_name}}" required><br>
+    
+        <label for="f_nickname"><b>Franchesis Nick Name</b></label>
+        <input type="text" placeholder="Enter Nick Name" name="f_nickname" id="f_nickname" value="{{object.f_nickname}}" required><br>
+    
+        <label for="started_year"><b>Started Year</b></label>
+        <input type="number" placeholder="Started Year" name="f_started_year" id="f_started_year" value="{{object.f_started_year}}" required><br>
+
+        <label for="f_logo"><b>Logo</b></label>
+        <input type="file" name="f_logo">{{data.f_logo}}<br>
+    
+        <label for="no_of_trophies"><b>No of Trophies</b></label>
+        <input type="number" placeholder="No of Trophies" name="no_of_trophies" id="no_of_trophies" value="{{object.no_of_trophies}}" required><br>
+        <hr>
+    
+        <button type="submit" class="registerbtn">Update</button>
+        <button><a href="{% url 'delete_franchesis' object.id %}">Delete</a></button>
+      </div>
+
+  </form>
+{% endblock %}
