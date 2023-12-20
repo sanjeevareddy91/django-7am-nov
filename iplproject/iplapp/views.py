@@ -299,3 +299,50 @@ class FranchesisGenericUpdateView(UpdateView):
         # APIView
         # GenericApis
         # Viewsets
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+
+# @api_view decorator is very important to convert normal function in function based api..
+
+@api_view(['GET',"POST"])
+def sample_api(request):
+    if request.method == "GET":
+        return Response({'message':"Sample Api"})
+    else:
+        data = request.data
+        print(data)
+        email1 = "sanjeev@gmail.com"
+        password1 = "password"
+        if data['email'] == email1 and data['password'] == password1:
+            return Response({"success":True,"message":"Login Successful"})
+        else:
+            return Response({"success":False,"message":"Check the credentials"})
+
+import json        
+@api_view(['GET',"POST"])
+def register_franchesis_api(request):
+    if request.method == "GET":
+        data = Franchises.objects.all()
+        response_data = []
+        for ele in data:
+            dict1 = {
+                "f_name":ele.f_name,
+                "f_nickname":ele.f_nickname,
+                "f_started_year":ele.f_started_year,
+                "no_of_trophies":ele.no_of_trophies,
+
+            }
+            response_data.append(dict1)
+        return Response({
+            "success":True,
+            "data":response_data,
+            "count":len(response_data)
+        })
+    else:
+        new_record = {ele:request.data[ele] for ele in request.data}
+        # import pdb;pdb.set_trace()
+        Franchises.objects.create(**new_record)
+        new_record.pop('f_logo')
+        return Response({"success":True,"message":"Franchesis Added","data":json.dumps(new_record)})
