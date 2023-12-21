@@ -28,5 +28,9 @@ urlpatterns = [
     path('cls_generic_update/<pk>',FranchesisGenericUpdateView.as_view(),name='cls_generic_update'),
     # apis urls
     path('sample_api',sample_api,name="sample_api"),
-    path('register_franchesis_api',register_franchesis_api,name="register_franchesis_api")
+    path('register_franchesis_api',register_franchesis_api,name="register_franchesis_api"),
+    path('update_delete_get_franchesis_api/<id>',update_delete_get_franchesis_api,name="update_delete_get_franchesis_api"),
+    path('serializer_register_franchesis_api',serializer_register_franchesis_api,name="serializer_register_franchesis_api"),
+    path('update_delete_get_serializer_franchesis_api/<id>',update_delete_get_serializer_franchesis_api,name="update_delete_get_serializer_franchesis_api"),
+
 ]

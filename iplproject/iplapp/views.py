@@ -328,6 +328,7 @@ def register_franchesis_api(request):
         response_data = []
         for ele in data:
             dict1 = {
+                'id':ele.id,
                 "f_name":ele.f_name,
                 "f_nickname":ele.f_nickname,
                 "f_started_year":ele.f_started_year,
@@ -346,3 +347,91 @@ def register_franchesis_api(request):
         Franchises.objects.create(**new_record)
         new_record.pop('f_logo')
         return Response({"success":True,"message":"Franchesis Added","data":json.dumps(new_record)})
+    
+@api_view(['PUT','DELETE','GET'])
+def update_delete_get_franchesis_api(request,id):
+
+    if request.method == "GET":
+        data = Franchises.objects.get(id=id)
+        final_data = {
+            'f_name':data.f_name,
+            'f_nickname':data.f_nickname,
+            'f_started_year':data.f_started_year,
+            'no_of_trophies':data.no_of_trophies,
+            'f_logo':data.f_logo.url
+        }
+        return Response({'success':True,'data':final_data})
+    
+    elif request.method == "PUT":
+        # data = Franchises.objects.get(id=id)
+        # data.f_name = request.data['f_name']
+        # data.f_nickname = request.data['f_nickname']
+        # data.f_started_year = request.data['f_started_year']
+        # data.no_of_trophies = request.data['no_of_trophies']
+        # data.save()
+        # final_data = {
+        #     'f_name':data.f_name,
+        #     'f_nickname':data.f_nickname,
+        #     'f_started_year':data.f_started_year,
+        #     'no_of_trophies':data.no_of_trophies,
+        #     'f_logo':data.f_logo.url
+        # }
+
+        # 2nd Approach
+        data = Franchises.objects.filter(id=id)
+        data.update(**request.data)
+        return Response({'success':True,'data':request.data})
+    
+    elif request.method == "DELETE":
+        data = Franchises.objects.get(id=id)
+        data.delete()
+        return Response({'success':True,'message':"Franchesis deleted"})
+
+
+
+# GET  - list
+# POST - post 
+# GET - retrieve 1 record
+# PUT - update
+# DELETE - delete 
+    
+
+from .serializers import FranchisesModelSerializer
+@api_view(['GET','POST'])
+def serializer_register_franchesis_api(request):
+    if request.method == "GET":
+        data = Franchises.objects.all()
+        # if it is get method just pass data as positional argument to serializer
+        serializer = FranchisesModelSerializer(data,many=True)
+        return Response({'success':True,"data":serializer.data})
+    
+    elif request.method == "POST":
+        serializer = FranchisesModelSerializer(data=request.data)
+        # if it is post method pass data as keyword argument to serializer
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'success':True,'data':serializer.data})
+        return Response({'success':True,"message":serializer.errors})
+    
+
+@api_view(['PUT','DELETE','GET'])
+def update_delete_get_serializer_franchesis_api(request,id):
+
+    if request.method == "GET":
+        data = Franchises.objects.get(id=id)
+        serializer = FranchisesModelSerializer(data)
+        return Response({'success':True,'data':serializer.data})
+    
+    elif request.method == "PUT":
+        info = Franchises.objects.get(id=id)
+        serializer = FranchisesModelSerializer(info,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'success':True,'data':request.data})
+        else:
+            return Response({'success':False,'message':serializer.errors})
+    
+    elif request.method == "DELETE":
+        data = Franchises.objects.get(id=id)
+        data.delete()
+        return Response({'success':True,'message':"Franchesis deleted"})
