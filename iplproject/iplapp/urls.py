@@ -32,5 +32,8 @@ urlpatterns = [
     path('update_delete_get_franchesis_api/<id>',update_delete_get_franchesis_api,name="update_delete_get_franchesis_api"),
     path('serializer_register_franchesis_api',serializer_register_franchesis_api,name="serializer_register_franchesis_api"),
     path('update_delete_get_serializer_franchesis_api/<id>',update_delete_get_serializer_franchesis_api,name="update_delete_get_serializer_franchesis_api"),
-
+    path('normalserializer_register_franchesis_api',normalserializer_register_franchesis_api,name="normalserializer_register_franchesis_api"),
+    path('cls_sample_api/',ClsSampleAPi.as_view(),name='cls_sample_api'),
+    path('cls_franchesis_api_view/',FranchesisAPIView.as_view()),
+    path('cls_modify_api_view/<id>',FranchesisModifyAPIView.as_view())
 ]

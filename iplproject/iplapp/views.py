@@ -435,3 +435,80 @@ def update_delete_get_serializer_franchesis_api(request,id):
         data = Franchises.objects.get(id=id)
         data.delete()
         return Response({'success':True,'message':"Franchesis deleted"})
+
+
+from .serializers import FranchesisNormalSerializer
+
+@api_view(['GET','POST'])
+def normalserializer_register_franchesis_api(request):
+    if request.method == "GET":
+        data = Franchises.objects.all()
+        # if it is get method just pass data as positional argument to serializer
+        serializer = FranchesisNormalSerializer(data,many=True)
+        return Response({'success':True,"data":serializer.data})
+    
+    elif request.method == "POST":
+        serializer = FranchesisNormalSerializer(data=request.data)
+        # if it is post method pass data as keyword argument to serializer
+        if serializer.is_valid():
+            # Franchises.objects.create(**serializer.data)
+            return Response({'success':True,'data':serializer.data})
+        return Response({'success':True,"message":serializer.errors})
+
+
+# Class Based Api Views 
+    
+# Https status code:
+    # 200,201,204,400,401,403,404,500,504,408
+
+from rest_framework.views import APIView
+
+class ClsSampleAPi(APIView):
+    def get(self,request):
+        return Response({'message':"Sample Api"})
+    
+    def post(self,request):
+        data = request.data
+        print(data)
+        email1 = "sanjeev@gmail.com"
+        password1 = "password"
+        if data['email'] == email1 and data['password'] == password1:
+            return Response({"success":True,"message":"Login Successful"})
+        else:
+            return Response({"success":False,"message":"Check the credentials"})
+
+
+class FranchesisAPIView(APIView):
+    def get(self,request):
+        data = Franchises.objects.all()
+        serializer = FranchesisNormalSerializer(data,many=True)
+        return Response({'success':True,"data":serializer.data})
+
+    def post(self,request):
+        serializer = FranchesisNormalSerializer(data=request.data)
+        # if it is post method pass data as keyword argument to serializer
+        if serializer.is_valid():
+            Franchises.objects.create(**serializer.data)
+            return Response({'success':True,'data':serializer.data})
+        return Response({'success':True,"message":serializer.errors})
+
+
+class FranchesisModifyAPIView(APIView):
+    def get(self,request,id):
+        data = Franchises.objects.get(id=id)
+        serializer = FranchesisNormalSerializer(data)
+        return Response({'success':True,"data":serializer.data})
+
+    def put(self,request,id):
+        serializer = FranchesisNormalSerializer(data=request.data)
+        # if it is post method pass data as keyword argument to serializer
+        if serializer.is_valid():
+            fran_data = Franchises.objects.filter(id=id)
+            fran_data.update(**serializer.data)
+            return Response({'success':True,'data':serializer.data})
+        return Response({'success':True,"message":serializer.errors})
+
+    def delete(self,request,id):
+        data = Franchises.objects.get(id=id)
+        data.delete()
+        return Response({'success':True,"message":"Franchesis Deleted"})
