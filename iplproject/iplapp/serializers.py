@@ -14,3 +14,9 @@ class FranchesisNormalSerializer(Serializer):
     f_started_year = serializers.IntegerField()
     f_logo = serializers.ImageField(required=False)
     no_of_trophies = serializers.IntegerField()
+
+class UserInfoSerializer(Serializer):
+    email = serializers.CharField(max_length=25)
+    password = serializers.CharField(max_length=12)
+    mobile = serializers.CharField(max_length=10)
+    address = serializers.CharField(max_length=100)

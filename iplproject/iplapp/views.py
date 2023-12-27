@@ -18,6 +18,7 @@ from django.views.generic.detail import DetailView
 
 
 from django.views.generic.edit import CreateView,UpdateView
+from .serializers import *
 
 def welcome_message(request):
     return HttpResponse("<h1>Hello, Welcome to Django!</h1>")
@@ -457,7 +458,9 @@ def normalserializer_register_franchesis_api(request):
 
 
 # Class Based Api Views 
-    
+    # APIView
+    # Generic Views
+    # Viewsets
 # Https status code:
     # 200,201,204,400,401,403,404,500,504,408
 
@@ -477,8 +480,10 @@ class ClsSampleAPi(APIView):
         else:
             return Response({"success":False,"message":"Check the credentials"})
 
+from rest_framework.permissions import IsAuthenticated
 
 class FranchesisAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
         data = Franchises.objects.all()
         serializer = FranchesisNormalSerializer(data,many=True)
@@ -512,3 +517,22 @@ class FranchesisModifyAPIView(APIView):
         data = Franchises.objects.get(id=id)
         data.delete()
         return Response({'success':True,"message":"Franchesis Deleted"})
+
+
+from rest_framework.authtoken.models import Token
+
+class UserInfoApiViews(APIView):
+    def post(self,request):
+        serializer = UserInfoSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            # import pdb;pdb.set_trace()
+            username = data['email'].split('@')[0]
+            print(username)
+            user_data = User.objects.create(username=username,email = data['email'])
+            user_data.set_password(data['password'])
+            user_data.save()
+            # Token for the Created User..
+            created_token = Token.objects.create(user=user_data)
+            UserInfo.objects.create(user_data=user_data,mobile=data['mobile'],address=data['address'])
+            return Response({"Success":True,"Message":"User Added",'token':created_token.key})

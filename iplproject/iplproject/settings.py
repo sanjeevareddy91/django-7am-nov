@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'iplapp',
     'crispy_forms',
     'crispy_bootstrap4',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -158,3 +159,9 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'gsanjeevreddy91@gmail.com'# sender email.
 EMAIL_HOST_PASSWORD = 'rrgsjxsydsidczbp'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+               'rest_framework.authentication.TokenAuthentication',
+    ),
+}

@@ -35,5 +35,6 @@ urlpatterns = [
     path('normalserializer_register_franchesis_api',normalserializer_register_franchesis_api,name="normalserializer_register_franchesis_api"),
     path('cls_sample_api/',ClsSampleAPi.as_view(),name='cls_sample_api'),
     path('cls_franchesis_api_view/',FranchesisAPIView.as_view()),
-    path('cls_modify_api_view/<id>',FranchesisModifyAPIView.as_view())
+    path('cls_modify_api_view/<id>',FranchesisModifyAPIView.as_view()),
+    path('cls_userinfo_api/',UserInfoApiViews.as_view())
 ]
