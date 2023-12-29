@@ -536,3 +536,54 @@ class UserInfoApiViews(APIView):
             created_token = Token.objects.create(user=user_data)
             UserInfo.objects.create(user_data=user_data,mobile=data['mobile'],address=data['address'])
             return Response({"Success":True,"Message":"User Added",'token':created_token.key})
+
+# Generic ApiViews 
+from rest_framework import generics
+
+class FranchesisCreateAPiView(generics.CreateAPIView):
+    queryset = Franchises.objects.all() 
+    serializer_class = FranchisesModelSerializer
+
+    # def post(self,request):
+    #     custom code
+
+class FranchesisListAPiView(generics.ListAPIView):
+    queryset = Franchises.objects.all() 
+    serializer_class = FranchisesModelSerializer
+
+
+class FranchesisRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Franchises.objects.all() 
+    serializer_class = FranchisesModelSerializer
+
+class FranchesisUpdateAPIView(generics.UpdateAPIView):
+    queryset = Franchises.objects.all() 
+    serializer_class = FranchisesModelSerializer
+
+class FranchesisDestroyAPIView(generics.DestroyAPIView):
+    queryset = Franchises.objects.all() 
+    serializer_class = FranchisesModelSerializer
+
+class FranchesisListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Franchises.objects.all() 
+    serializer_class = FranchisesModelSerializer
+
+class FranchesisRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Franchises.objects.all() 
+    serializer_class = FranchisesModelSerializer
+
+# Viewsets
+
+# get - list
+# post - create 
+# get - retrieve 
+# put - update 
+# delete - destroy
+# patch - partial_update
+
+from rest_framework import viewsets
+
+class FranchesisModelViewset(viewsets.ModelViewSet):
+    queryset = Franchises.objects.all() 
+    serializer_class = FranchisesModelSerializer
+

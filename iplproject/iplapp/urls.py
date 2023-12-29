@@ -36,5 +36,18 @@ urlpatterns = [
     path('cls_sample_api/',ClsSampleAPi.as_view(),name='cls_sample_api'),
     path('cls_franchesis_api_view/',FranchesisAPIView.as_view()),
     path('cls_modify_api_view/<id>',FranchesisModifyAPIView.as_view()),
-    path('cls_userinfo_api/',UserInfoApiViews.as_view())
+    path('cls_userinfo_api/',UserInfoApiViews.as_view()),
+    path('cls_franchesis_create_api_view/',FranchesisCreateAPiView.as_view()),
+    path('cls_franchesis_list_api_view/',FranchesisListAPiView.as_view()),
+    path('cls_franchesis_retrieve_api_view/<pk>',FranchesisRetrieveAPIView.as_view()),
+    path('cls_franchesis_update_api_view/<pk>',FranchesisUpdateAPIView.as_view()),
+    path('cls_franchesis_destroy_api_view/<pk>',FranchesisDestroyAPIView.as_view()),
+    path('cls_franchesis_list_create_api_view/',FranchesisListCreateAPIView.as_view()),
+    path('cls_franchesis_retrieve_update_destroy_api_view/<pk>',FranchesisRetrieveUpdateDestroyAPIView.as_view()),
 ]
+
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'franchesmodelviewset', FranchesisModelViewset)
+urlpatterns = router.urls
