@@ -481,9 +481,25 @@ class ClsSampleAPi(APIView):
             return Response({"success":False,"message":"Check the credentials"})
 
 from rest_framework.permissions import IsAuthenticated
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
+
+jwt_token = openapi.Parameter('Authorization', in_=openapi.IN_QUERY, description='JWT Token',
+                                type=openapi.TYPE_STRING)
 class FranchesisAPIView(APIView):
     permission_classes = (IsAuthenticated,)
+    @swagger_auto_schema(
+        manual_parameters=[jwt_token],
+        # query_serializer=CategorySerializer,
+        # responses = {
+        #     '200' : category_response,
+        #     '400': 'Bad Request'
+        # },        
+        security=[],
+        operation_id='List of categories',
+        operation_description='This endpoint does some magic',
+    )
     def get(self,request):
         data = Franchises.objects.all()
         serializer = FranchesisNormalSerializer(data,many=True)

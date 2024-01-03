@@ -50,4 +50,4 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'franchesmodelviewset', FranchesisModelViewset)
-urlpatterns = router.urls
+urlpatterns = urlpatterns + router.urls
